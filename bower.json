@@ -1,0 +1,8 @@
+{
+  "name": "mailchimp-it",
+  "version": "1.0.0",
+  "description": "Mailchimp AJAX small wrapper",
+  "dependencies": {
+    "jquery": ">=1.11.3"
+  }
+}
