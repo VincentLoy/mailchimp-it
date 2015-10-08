@@ -10,6 +10,6 @@
     }
   ],
   "require": {
-    "drewm/mailchimp-api": "1.1"
+    "drewm/mailchimp-api": "dev-api-v3"
   }
 }
