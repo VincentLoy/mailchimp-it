@@ -1,5 +1,127 @@
-.test {
-  .foo {
-    display: flex;
+// -------------------------------------
+// VARIABLES
+// -------------------------------------
+@spacing: 30px;
+
+@mailchimp-blue : #2d82c1;
+@mailchimp-blue-light : #4e9dd6;
+@mailchimp-black : #132034;
+@mailchimp-yellow : #ffd14f;
+@mailchimp-brown-dark: #654e44;
+@mailchimp-brown: #8f694c;
+@mailchimp-beige-dark: #e8b683;
+@mailchimp-beige-dark: #f1d1ab;
+@mailchimp-beige-light: #fbe8cc;
+
+@color-white: #fff;
+@color-black: #000;
+@color-gray: #ccc;
+@color-success: #3aa559;
+@color-error: #be3838;
+
+@pacifico: 'Pacifico', cursive;
+@lato: 'Lato', sans-serif;
+
+// -------------------------------------
+// Generals
+// -------------------------------------
+* {
+  box-sizing: border-box;
+}
+
+.pacifico {
+  font-family: @pacifico;
+  font-weight: 400;
+}
+
+// -------------------------------------
+// DEMO
+// -------------------------------------
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: @mailchimp-blue-light;
+  color: @color-white;
+  font-family: @lato;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.demo-title {
+  font-size: 90px;
+  margin: 0;
+}
+
+.demo-title-h2 {
+  font-size: 30px;
+  margin: 0;
+  padding: @spacing;
+  font-weight: 300;
+}
+
+.form-container {
+  padding: @spacing;
+  text-align: center;
+}
+
+.input-addon {
+  display: flex;
+}
+
+.input-field {
+  flex: 1;
+  padding: (@spacing / 3) (@spacing / 2);
+  border: 2px solid @mailchimp-blue;
+  border-right: 0;
+  border-radius: 3px 0 0 3px;
+  outline: 0;
+  transition: 0.5s ease all;
+
+  &:focus {
+    &,
+    & + .input-item {
+      border-color: darken(@mailchimp-blue, 15%);
+    }
   }
+}
+
+.input-item {
+  padding: 0 (@spacing / 2);
+  border: 2px solid @mailchimp-blue;
+//  border-left: 2px solid @mailchimp-blue;
+  border-radius: 0 3px 3px 0;
+  transition: 0.5s ease all;
+  outline: 0;
+  color: @mailchimp-black;
+  font-size: 16px;
+  cursor: pointer;
+  background: @color-gray;
+}
+
+.mailchimp-it-response-box {
+  padding: @spacing;
+  font-size: 18px;
+  font-weight: 300;
+  border-radius: 3px;
+}
+
+.mailchimp-it-success {
+  background: @color-success;
+  border: 2px solid darken(@color-success, 15%);
+  text-transform: capitalize;
+
+}
+
+.mailchimp-it-error {
+  background: @color-error;
+  border: 2px solid darken(@color-error, 15%);
 }

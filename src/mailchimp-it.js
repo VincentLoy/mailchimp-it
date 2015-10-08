@@ -12,7 +12,7 @@
     var // functions
         extend,
         mailchimpItLoader,
-        subscribe,
+        makeBox,
         mailchimpIt;
 
     extend = function (out) {
@@ -33,6 +33,16 @@
         return out;
     };
 
+    makeBox = function (message, className) {
+        var div = document.createElement('div');
+
+        div.classList.add('mailchimp-it-response-box');
+        div.classList.add(className);
+        div.textContent = message;
+
+        return div;
+    };
+
     mailchimpItLoader = function () {
         var el = document.createElement('div');
         el.classList.add('mailchimpit-loader');
@@ -46,17 +56,20 @@
         var elt = document.querySelectorAll(element),
             parameters = extend({
                 successMessage: 'Thanks for subscribing !',
-                errorMessage: 'an error has occurred, please try again later.',
+                successMessageClassName: 'mailchimp-it-success',
+                errorMessageClassName: 'mailchimp-it-error',
+                errorMessageTimeout: 5000,
                 mailInputName: 'newsletter_mail',
                 firstNameInputName: 'newsletter_first_name',
                 lastNameInputName: 'newsletter_last_name',
                 loaderElt: mailchimpItLoader()
-            }, args);
+            }, args),
+            successBox = makeBox(parameters.successMessage, parameters.successMessageClassName),
+            errorBox;
 
         Array.prototype.forEach.call(elt, function (el) {
             if (el.nodeName !== "FORM") {
-                console.error('mailchimp-it only works with forms tags, you provide '
-                    + el.nodeName, el);
+                console.error('mailchimp-it only works with forms tags, you provide ' + el.nodeName, el);
             } else {
                 // ok
                 var action = el.getAttribute('action');
@@ -85,7 +98,9 @@
                     }
 
                     for (name in data) {
-                        urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+                        if (data.hasOwnProperty(name)) {
+                            urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+                        }
                     }
 
                     urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
@@ -93,16 +108,33 @@
                     request.open('POST', action, true);
                     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                     //request.setRequestHeader('Content-Length', urlEncodedData.length);
+                    el.parentNode.insertBefore(parameters.loaderElt, el.nextSibling);
+                    el.remove();
+
                     request.onload = function () {
-                        if (request.status >= 200 && request.status < 400) {
-                            // Success!
-                            var d = request.responseText;
+                        var d = JSON.parse(request.responseText);
+                        // Success!
+                        if (request.status >= 200 && request.status < 400 && d.status === 'subscribed') {
                             console.log('success !');
+                            console.log(request.status);
                             console.log(d);
+
+                            parameters.loaderElt.parentNode.insertBefore(successBox, parameters.loaderElt.nextSibling);
+                            parameters.loaderElt.remove();
+
                         } else {
                             // We reached our target server, but it returned an error
-                            console.error(JSON.parse(request.responseText));
-                            console.error('baaaaaaaaaaad');
+                            errorBox = makeBox(d.detail, parameters.errorMessageClassName);
+                            console.error(d);
+                            console.error(d.detail);
+
+                            parameters.loaderElt.parentNode.insertBefore(errorBox, parameters.loaderElt.nextSibling);
+                            parameters.loaderElt.remove();
+
+                            window.setTimeout(function () {
+                                errorBox.parentNode.insertBefore(el, errorBox.nextSibling);
+                                errorBox.remove();
+                            }, parameters.errorMessageTimeout);
                         }
                     };
                     request.send(urlEncodedData);

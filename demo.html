@@ -2,16 +2,37 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Mailchimp-it demonstration</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="src/demo/css/style.css"/>
 </head>
 <body>
-<h1>It worked demo!</h1>
 
-<form class="test" method="post" action="dist/MailchimpIt.php">
-    <input type="email" name="newsletter_mail" value="vincent.loy@gregr.fr"/>
-    <button type="submit">Go !</button>
-</form>
+<div class="wrapper">
+    <h1 class="demo-title">
+        <span class="pacifico">Mailchimp-it</span>
+    </h1>
+    <h2 class="demo-title-h2">Demonstration</h2>
+
+    <div class="form-container">
+        <form class="test" method="post" action="src/MailchimpIt.php">
+            <div class="input-addon">
+                <input class="input-field" type="email" name="newsletter_mail"
+                       placeholder="Enter you mail address" required/>
+                <button class="input-item" type="submit">subscribe</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script src="src/mailchimp-it.js"></script>
-<script src="src/demo/js/app.js"></script>
+<script>
+    /*global mailchimpIt*/
+    (function () {
+        'use strict';
+        mailchimpIt('.test');
+    }());
+</script>
 </body>
 </html>
