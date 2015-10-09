@@ -20,7 +20,6 @@ the input's names, you can use the default field names, but if you wan't to use
 your own names, don't forget to put them in the mailchimp-it configuration.
 
 ```javascript
-```javascript
 (function () {
     'use strict';
     mailchimpIt('.yourForm', {
