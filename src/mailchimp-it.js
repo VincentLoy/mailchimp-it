@@ -114,7 +114,7 @@
             if (el.nodeName !== "FORM") {
                 console.error('mailchimp-it only works with forms tags, you provide ' + el.nodeName, el);
             } else {
-                // ok
+
                 var action = el.getAttribute('action');
 
                 el.onsubmit = function (e) {
