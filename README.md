@@ -71,11 +71,11 @@ Custom example
 Want to use jQuery ?
 No problem
 ```javascript
-(function () {
+(function ($) {
     'use strict';
     $('.test_form').mailchimpIt({
         successMessage: 'Thanks for subscribing, you\'ll be notified for the next update !',
         successMessageBefore: '<p>Hell Yeah !</p>'
     });
-}());
+}(jQuery));
 ```
