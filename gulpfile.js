@@ -76,7 +76,7 @@
     gulp.task('copy', function () {
         return gulp.src('src/MailchimpIt.php')
             .pipe(copy())
-            .pipe(gulp.dest('dist/'))
+            .pipe(gulp.dest('dist/'));
     });
 
     gulp.task('compress_js', function () {
@@ -88,7 +88,7 @@
             .pipe(rename({
                 extname: '.min.js'
             }))
-            .pipe(sourcemaps.write())
+            .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest('dist/'));
     });
 

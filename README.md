@@ -9,7 +9,8 @@ My custom script use this [Mailchimp PHP wrapper](https://github.com/drewm/mailc
 
 to install it just
 ```console
-composer require drewm/mailchimp-api:dev-api-v3
+$ composer require drewm/mailchimp-api:dev-api-v3
+$ composer install
 ```
 
 #### Use your custom script
@@ -17,6 +18,20 @@ If you want to use your own script, because you want to implement your own logic
 or simply because you work with a language like **Python ❤**, just take care with
 the input's names, you can use the default field names, but if you wan't to use
 your own names, don't forget to put them in the mailchimp-it configuration.
+
+```javascript
+```javascript
+(function () {
+    'use strict';
+    mailchimpIt('.yourForm', {
+	    ...
+        mailInputName: 'YOUR_CUSTOM_MAIL_FIELD_NAME',
+        firstNameInputName: 'YOUR_CUSTOM_FIRST_NAME_FIELD_NAME',
+        lastNameInputName: 'YOUR_CUSTOM_LAST_NAME_FIELD_NAME',
+        ...
+    });
+}());
+```
 
 
 #### HTML
@@ -67,7 +82,7 @@ Mailchimp-it allow you to customize a lot of things
         mailInputName: 'newsletter_mail', //default mail input name
         firstNameInputName: 'newsletter_first_name', //default first name input name
         lastNameInputName: 'newsletter_last_name', //default last name input name
-        loaderElt: mailchimpItLoader() //default loader, you can write your own function
+        loaderElt: null //There is a default SVG loader when is set to null, but you can put here you own loader in raw HTML
     });
 }());
 ```
@@ -78,7 +93,8 @@ Custom example
     'use strict';
     mailchimpIt('.test_form', {
         successMessage: 'Thanks for subscribing, you\'ll be notified for the next update !',
-        successMessageBefore: '<p>Hell Yeah !</p>'
+        successMessageBefore: '<p>Hell Yeah !</p>',
+        loaderElt: '<p>Please Wait... <img src="img/myCustomLoader.gif"/></p>'
     });
 }());
 ```

@@ -28,8 +28,8 @@ if (!isset($_POST['newsletter_mail'])) {
 
 } else {
     try {
-        $api_key = getenv('MAILCHIMP_API_KEY');
-        $list_id = getenv('MAILCHIMP_LIST_ID');
+        $api_key = getenv('MAILCHIMP_API_KEY'); // PUT YOUR MAILCHIMP API KEY HERE
+        $list_id = getenv('MAILCHIMP_LIST_ID'); // PUT YOUR MAILCHIMP LIST ID HERE
 
         $email = $_POST['newsletter_mail'];
         $merge_vars = array();

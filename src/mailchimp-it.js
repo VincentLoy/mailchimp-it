@@ -68,13 +68,18 @@
         return div;
     };
 
-    mailchimpItLoader = function () {
+    mailchimpItLoader = function (loader) {
         var el = document.createElement('div');
         el.classList.add('mailchimpit-loader');
-        el.innerHTML =
-            '<svg class="mailchimp-it-spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">' +
-            '<circle class="mailchimp-it-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>' +
-            '</svg>';
+
+        if (loader) {
+            el.innerHTML = loader;
+        } else {
+            el.innerHTML =
+                '<svg class="mailchimp-it-spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">' +
+                '<circle class="mailchimp-it-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>' +
+                '</svg>';
+        }
 
         return el;
     };
@@ -94,7 +99,7 @@
                 mailInputName: 'newsletter_mail',
                 firstNameInputName: 'newsletter_first_name',
                 lastNameInputName: 'newsletter_last_name',
-                loaderElt: mailchimpItLoader()
+                loaderElt: null
             }, args),
             successBox = makeBox(
                 parameters.successMessage,
@@ -102,6 +107,7 @@
                 parameters.successMessageBefore,
                 parameters.successMessageAfter
             ),
+            loader = mailchimpItLoader(parameters.loaderElt),
             errorBox;
 
         Array.prototype.forEach.call(elt, function (el) {
@@ -144,48 +150,45 @@
 
                     request.open('POST', action, true);
                     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    //TODO : Check if loaderElt is string, then put it in a Node elt
-                    el.parentNode.insertBefore(parameters.loaderElt, el.nextSibling);
+                    el.parentNode.insertBefore(loader, el.nextSibling);
                     el.remove();
 
                     request.onload = function () {
                         var d = JSON.parse(request.responseText);
 
                         if (request.status >= 200 && request.status < 400 && d.status === 'subscribed') {
-                            console.log('success !');
-                            console.log(request.status);
-                            console.log(d);
 
-                            parameters.loaderElt.parentNode.insertBefore(successBox, parameters.loaderElt.nextSibling);
-                            parameters.loaderElt.remove();
+                            loader.parentNode.insertBefore(successBox, loader.nextSibling);
+                            loader.remove();
 
                         } else {
+
                             errorBox = makeBox(
                                 d.detail,
                                 parameters.errorMessageClassName,
                                 parameters.errorMessageBefore,
                                 parameters.errorMessageAfter
                             );
-                            console.error(d);
-                            console.error(d.detail);
 
-                            parameters.loaderElt.parentNode.insertBefore(errorBox, parameters.loaderElt.nextSibling);
-                            parameters.loaderElt.remove();
+                            loader.parentNode.insertBefore(errorBox, loader.nextSibling);
+                            loader.remove();
 
                             window.setTimeout(function () {
                                 errorBox.parentNode.insertBefore(el, errorBox.nextSibling);
                                 errorBox.remove();
                             }, parameters.errorMessageTimeout);
                         }
+
                     };
+
                     request.send(urlEncodedData);
-                    console.log(urlEncodedData);
                 };
             }
         });
     };
 
     exports.mailchimpIt = mailchimpIt;
+
 }(window));
 
 /*global $, jQuery, mailchimpIt*/
