@@ -49,6 +49,30 @@
             }));
     });
 
+    gulp.task('mailchimpit_css', function () {
+        return gulp.src('src/mailchimp-it.less', {read: true})
+            .pipe(plumber({
+                errorHandler: function (err) {
+                    console.log(err);
+                    this.emit('end');
+                }
+            }))
+            .pipe(less().on('error', gutil.log))
+            .pipe(autoprefixer({
+                browsers: ['last 3 versions'],
+                cascade: false
+            }))
+            .pipe(sourcemaps.init())
+            .pipe(sourcemaps.write())
+            .pipe(rename({
+                extname: '.css'
+            }))
+            .pipe(gulp.dest('dist/'))
+            .pipe(browserSync.reload({
+                stream: true
+            }));
+    });
+
     gulp.task('copy', function () {
         return gulp.src('src/MailchimpIt.php')
             .pipe(copy())
@@ -74,11 +98,11 @@
             proxy: 'http://mailchimpit'
         });
 
-        gulp.watch(targetLESSDir + '/**/*.less', ['css']);
+        gulp.watch(targetLESSDir + '/**/*.less', ['css', 'mailchimpit_css']);
         gulp.watch(['*.html', './**/**/*.php', './**/**/*.js'], browserSync.reload);
     });
 
 
     gulp.task('default', ['serve']);
-    gulp.task('make', ['compress_js', 'copy']);
+    gulp.task('make', ['compress_js', 'copy', 'mailchimpit_css']);
 }());

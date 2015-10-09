@@ -12,6 +12,7 @@
     var // functions
         extend,
         mailchimpItLoader,
+        makeDiv,
         makeBox,
         mailchimpIt;
 
@@ -33,12 +34,35 @@
         return out;
     };
 
-    makeBox = function (message, className) {
-        var div = document.createElement('div');
+    makeDiv = function (elType, className, content) {
+        var el = document.createElement(elType);
+        el.classList.add(className);
+        el.innerHTML = content;
+        return el;
+    };
+
+    makeBox = function (message, className, before, after) {
+        var div = document.createElement('div'),
+            divBefore,
+            divAfter,
+            p = document.createElement('p');
 
         div.classList.add('mailchimp-it-response-box');
         div.classList.add(className);
-        div.textContent = message;
+
+        p.classList.add('mailchimp-it-text');
+        p.textContent = message;
+        div.appendChild(p);
+
+        if (before) {
+            divBefore = makeDiv('div', 'mailchimp-it-before-response', before);
+            div.insertBefore(divBefore, p);
+        }
+
+        if (after) {
+            divAfter = makeDiv('div', 'mailchimp-it-after-response', after);
+            div.appendChild(divAfter);
+        }
 
         return div;
     };
@@ -46,7 +70,10 @@
     mailchimpItLoader = function () {
         var el = document.createElement('div');
         el.classList.add('mailchimpit-loader');
-        el.textContent = 'Please wait...';
+        el.innerHTML =
+            '<svg class="mailchimp-it-spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">' +
+            '<circle class="mailchimp-it-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>' +
+            '</svg>';
 
         return el;
     };
@@ -56,15 +83,24 @@
         var elt = document.querySelectorAll(element),
             parameters = extend({
                 successMessage: 'Thanks for subscribing !',
+                successMessageBefore: '<p>Before !</p>',
+                successMessageAfter:  '<p>After !</p>',
                 successMessageClassName: 'mailchimp-it-success',
                 errorMessageClassName: 'mailchimp-it-error',
+                errorMessageBefore: null,
+                errorMessageAfter: null,
                 errorMessageTimeout: 5000,
                 mailInputName: 'newsletter_mail',
                 firstNameInputName: 'newsletter_first_name',
                 lastNameInputName: 'newsletter_last_name',
                 loaderElt: mailchimpItLoader()
             }, args),
-            successBox = makeBox(parameters.successMessage, parameters.successMessageClassName),
+            successBox = makeBox(
+                parameters.successMessage,
+                parameters.successMessageClassName,
+                parameters.successMessageBefore,
+                parameters.successMessageAfter
+            ),
             errorBox;
 
         Array.prototype.forEach.call(elt, function (el) {
@@ -124,7 +160,12 @@
 
                         } else {
                             // We reached our target server, but it returned an error
-                            errorBox = makeBox(d.detail, parameters.errorMessageClassName);
+                            errorBox = makeBox(
+                                d.detail,
+                                parameters.errorMessageClassName,
+                                parameters.errorMessageBefore,
+                                parameters.errorMessageAfter
+                            );
                             console.error(d);
                             console.error(d.detail);
 
