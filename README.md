@@ -4,6 +4,21 @@ Mailchimp-it is a small Javascript Library that turn a simple form into a workin
 
 ## Getting started
 
+#### Use the MailchimpIt.php script
+My custom script use this [Mailchimp PHP wrapper](https://github.com/drewm/mailchimp-api/tree/api-v3)
+
+to install it just
+```console
+composer require drewm/mailchimp-api:dev-api-v3
+```
+
+#### Use your custom script
+If you want to use your own script, because you want to implement your own logic,
+or simply because you work with a language like **Python ❤**, just take care with
+the input's names, you can use the default field names, but if you wan't to use
+your own names, don't forget to put them in the mailchimp-it configuration.
+
+
 #### HTML
 First of all, you need to load mailchimp-it files
 ```html

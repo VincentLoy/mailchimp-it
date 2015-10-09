@@ -60,7 +60,7 @@ if (!isset($_POST['newsletter_mail'])) {
         }
 
     } catch (Exception $e) {
-        error_log($e->getMessage());
+        error_log($e->getMessage(), 0);
         mailchimpItError('An error has occurred, please try again later.');
     }
 }

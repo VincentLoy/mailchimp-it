@@ -1,8 +1,14 @@
 <?php
 /**
  * Author: Vincent Loy <vincent.loy1@gmail.com>
- * Date: 07/10/15
- * Time: 19:58
+ *
+ * Note that this script only work if your form is configured to work with.
+ * You can use your own PHP/Python/Ruby script but you need to configure inputs names in the
+ * mailchimpt-it.js parameters
+ *
+ * Mandatory : <input type="email" name="newsletter_mail"/>
+ * Optional : <input type="text" name="newsletter_first_name"/>
+ * Optional : <input type="text" name="newsletter_last_name"/>
  */
 require(dirname(__DIR__) . '/vendor/autoload.php');
 
@@ -12,7 +18,7 @@ function mailchimpItError($message)
 {
     print_r(json_encode(array(
         'status' => 'error',
-        'error' => $message
+        'detail' => $message
     )));
 }
 
@@ -54,6 +60,7 @@ if (!isset($_POST['newsletter_mail'])) {
         }
 
     } catch (Exception $e) {
-        mailchimpItError($e->getMessage());
+        error_log($e->getMessage(), 0);
+        mailchimpItError('An error has occurred, please try again later.');
     }
 }
