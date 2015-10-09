@@ -62,7 +62,7 @@ Custom example
 (function () {
     'use strict';
     mailchimpIt('.test_form', {
-        successMessage: 'Thanks for subscribing, you'll be notified for the next update !',
+        successMessage: 'Thanks for subscribing, you\'ll be notified for the next update !',
         successMessageBefore: '<p>Hell Yeah !</p>'
     });
 }());
