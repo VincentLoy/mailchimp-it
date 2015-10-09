@@ -56,3 +56,14 @@ Mailchimp-it allow you to customize a lot of things
     });
 }());
 ```
+
+Custom example
+```javascript
+(function () {
+    'use strict';
+    mailchimpIt('.test_form', {
+        successMessage: 'Thanks for subscribing, you'll be notified for the next update !',
+        successMessageBefore: '<p>Hell Yeah !</p>',
+    });
+}());
+```
