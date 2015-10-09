@@ -18,7 +18,7 @@
     <h2 class="demo-title-h2">Demonstration</h2>
 
     <div class="form-container">
-        <form class="test" method="post" action="src/MailchimpIt.php">
+        <form class="test_form" method="post" action="src/MailchimpIt.php">
             <div class="input-addon">
                 <input class="input-field" type="email" name="newsletter_mail"
                        placeholder="Enter you mail address" required/>
@@ -32,7 +32,10 @@
     /*global mailchimpIt*/
     (function () {
         'use strict';
-        mailchimpIt('.test');
+        mailchimpIt('.test_form');
+
+        // jQuery use example
+        // $('.test_form').mailchimpIt();
     }());
 </script>
 </body>

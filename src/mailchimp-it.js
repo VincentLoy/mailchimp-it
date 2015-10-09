@@ -1,6 +1,7 @@
 /**
  * Project : mailchimp-it
- * description : Small AJAX Mailchimp Wrapper - Turn a simple form into a Mailchimp ready form
+ * version : 1.0.0
+ * description : Small AJAX Mailchimp Plugin - Turn a simple form into a Mailchimp-ready form
  * Author : Vincent Loy <vincent.loy1@gmail.com>
  */
 
@@ -83,8 +84,8 @@
         var elt = document.querySelectorAll(element),
             parameters = extend({
                 successMessage: 'Thanks for subscribing !',
-                successMessageBefore: '<p>Before !</p>',
-                successMessageAfter:  '<p>After !</p>',
+                successMessageBefore: null,
+                successMessageAfter: null,
                 successMessageClassName: 'mailchimp-it-success',
                 errorMessageClassName: 'mailchimp-it-error',
                 errorMessageBefore: null,
@@ -113,7 +114,7 @@
                 el.onsubmit = function (e) {
                     e.preventDefault();
                     var request = new XMLHttpRequest(),
-                        urlEncodedData = '',
+                        urlEncodedData,
                         urlEncodedDataPairs = [],
                         name,
                         mailInput = el.querySelector('input[name=' + parameters.mailInputName + ']'),
@@ -143,13 +144,13 @@
 
                     request.open('POST', action, true);
                     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    //request.setRequestHeader('Content-Length', urlEncodedData.length);
+                    //TODO : Check if loaderElt is string, then put it in a Node elt
                     el.parentNode.insertBefore(parameters.loaderElt, el.nextSibling);
                     el.remove();
 
                     request.onload = function () {
                         var d = JSON.parse(request.responseText);
-                        // Success!
+
                         if (request.status >= 200 && request.status < 400 && d.status === 'subscribed') {
                             console.log('success !');
                             console.log(request.status);
@@ -159,7 +160,6 @@
                             parameters.loaderElt.remove();
 
                         } else {
-                            // We reached our target server, but it returned an error
                             errorBox = makeBox(
                                 d.detail,
                                 parameters.errorMessageClassName,
@@ -197,7 +197,7 @@ if (window.jQuery) {
             mailchimpIt(el, options);
         }
 
-        $.fn.tweetParser = function (options) {
+        $.fn.mailchimpIt = function (options) {
             return mailchimpItify(this.selector, options);
         };
     }(jQuery, mailchimpIt));
