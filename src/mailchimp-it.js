@@ -92,10 +92,16 @@
                 successMessageBefore: null,
                 successMessageAfter: null,
                 successMessageClassName: 'mailchimp-it-success',
+                onSuccess: function () {
+                    return;
+                },
                 errorMessageClassName: 'mailchimp-it-error',
                 errorMessageBefore: null,
                 errorMessageAfter: null,
                 errorMessageTimeout: 5000,
+                onError: function () {
+                    return;
+                },
                 mailInputName: 'newsletter_mail',
                 firstNameInputName: 'newsletter_first_name',
                 lastNameInputName: 'newsletter_last_name',
@@ -161,6 +167,8 @@
                             loader.parentNode.insertBefore(successBox, loader.nextSibling);
                             loader.remove();
 
+                            parameters.onSuccess();
+
                         } else {
 
                             errorBox = makeBox(
@@ -172,6 +180,8 @@
 
                             loader.parentNode.insertBefore(errorBox, loader.nextSibling);
                             loader.remove();
+
+                            parameters.onError();
 
                             window.setTimeout(function () {
                                 errorBox.parentNode.insertBefore(el, errorBox.nextSibling);

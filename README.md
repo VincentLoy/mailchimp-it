@@ -74,10 +74,16 @@ Mailchimp-it allow you to customize a lot of things
         successMessageBefore: null, //innerHTML before success Message
         successMessageAfter: null, //innerHTML after success Message
         successMessageClassName: 'mailchimp-it-success', //Success message div class
+        onSuccess: function () { //Callback on Success
+            return;
+        },
         errorMessageClassName: 'mailchimp-it-error', //Error message div class
         errorMessageBefore: null, //innerHTML before error Message
         errorMessageAfter: null, //innerHTML after error Message
         errorMessageTimeout: 5000, //Time that error message will be displayed
+        onError: function () { //Callback on error
+            return;
+        },
         mailInputName: 'newsletter_mail', //default mail input name
         firstNameInputName: 'newsletter_first_name', //default first name input name
         lastNameInputName: 'newsletter_last_name', //default last name input name
@@ -93,7 +99,8 @@ Custom example
     mailchimpIt('.test_form', {
         successMessage: 'Thanks for subscribing, you\'ll be notified for the next update !',
         successMessageBefore: '<p>Hell Yeah !</p>',
-        loaderElt: '<p>Please Wait... <img src="img/myCustomLoader.gif"/></p>'
+        loaderElt: '<p>Please Wait... <img src="img/myCustomLoader.gif"/></p>',
+        onSuccess: muCustomFunction()
     });
 }());
 ```
