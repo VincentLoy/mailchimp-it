@@ -1,3 +1,5 @@
+![mailchimp-it cover](https://c1.staticflickr.com/1/779/21445971984_8690f5743c_o.png)
+
 #Mailchimp-it
 
 Mailchimp-it is a small Javascript Library that turn a simple form into a working mailchimp form using a small PHP script as a dependency.
