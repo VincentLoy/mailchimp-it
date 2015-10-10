@@ -1,7 +1,31 @@
 {
   "name": "mailchimp-it",
   "version": "1.0.0",
-  "description": "Mailchimp AJAX small wrapper",
+  "homepage": "https://github.com/VincentLoy/mailchimp-it",
+  "authors": [
+    "Vincent Loy <vincent.loy1@gmail.com>"
+  ],
+  "description": "Javascript Plugin that turn a form into a Mailchimp ready form",
+  "main": [
+    "src/mailchimp-it.js",
+    "src/mailchimp-it.less",
+    "src/mailchimpIt.php",
+    "composer.json",
+    "dist/mailchimp-it.min.js",
+    "dist/mailchimp-it.min.js.map",
+    "dist/mailchimp-it.css",
+    "dist/mailchimpIt.php"
+  ],
+  "keywords": [
+    "mailchimp",
+    "form",
+    "ajax",
+    "XMLHttpRequest",
+    "customizable",
+    "easy-to-use",
+    "newsletter"
+  ],
+  "license": "MIT",
   "dependencies": {
     "jquery": ">=1.11.3"
   }
