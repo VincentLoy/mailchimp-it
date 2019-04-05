@@ -1,4 +1,6 @@
-#Mailchimp-it
+**DEPRECATED**
+
+# Mailchimp-it
 
 Mailchimp-it is a small Javascript Library that turn a simple form into a working mailchimp form using a small PHP script as a dependency.
 
